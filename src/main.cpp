@@ -7,6 +7,7 @@
 #include "Pong.h"
 #include "Snake.h"
 #include "Frogger.h"
+#include "BlockBreaker.h"
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -23,7 +24,8 @@ const char* menuItems[] = {
   "Space Invaders",
   "Ping-Pong",
   "Snake",
-  "Frogger"
+  "Frogger",
+  "Block Breaker"
 };
 const int menuLength = sizeof(menuItems) / sizeof(menuItems[0]);
 
@@ -46,8 +48,8 @@ void setup() {
 }
 
 void loop() {
-  // drawMenu();
-  Frogger(display).run();
+  drawMenu();
+  // Frogger(display).run();
   checkButtons();
 }
 
@@ -108,6 +110,12 @@ void checkButtons() {
         // Iniciar Frogger
         Frogger(display).run();
         break;
+      
+      case 4:
+        // Iniciar Block Breaker
+        BlockBreaker(display).run();
+        break;
+
     }
     delay(200);
   }

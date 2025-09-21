@@ -4,6 +4,8 @@
 #include <Adafruit_SSD1306.h>
 #include <Line.h>
 #include <Frog.h>
+#include <LineBuilder.h>
+#include <vector>
 
 class FroggerGame {
     public:
@@ -14,13 +16,17 @@ class FroggerGame {
         Frog _frog;
         int _frogLine; // línea en la que está la rana (0-7)
         // Line _roadLines[8];
+        LineBuilder _line_builder;
+        // Line _array_lines; // van a ser 8 pero ahora es solo ejemplo
+        std::vector<Line> _array_lines;
+        
 
         unsigned long _initial_clock;
         bool _running;
         void draw();
         void update();
         void checkButtons();
-        void generateRoadLines();
+        void generateLines();
 
         // ItemLine _item_lines[8];
 

@@ -50,8 +50,8 @@ void setup() {
 }
 
 void loop() {
-  drawMenu();
-  // FroggerGame(display).run();
+  // drawMenu();
+  FroggerGame(display).run();
   checkButtons();
 }
 

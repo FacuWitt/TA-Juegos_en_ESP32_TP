@@ -6,7 +6,7 @@
 // Juegos
 #include "Pong.h"
 #include "Snake.h"
-#include "Frogger.h"
+#include "FroggerGame.h"
 #include "BlockBreaker.h"
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
@@ -21,11 +21,13 @@ void drawMenu();
 void checkButtons();
 
 const char* menuItems[] = {
-  "Space Invaders",
   "Ping-Pong",
   "Snake",
   "Frogger",
-  "Block Breaker"
+  "Block Breaker",
+  "FLAPPY-BIRD",
+  "BUSCAMINAS",
+  "DINO-GOOGLE"
 };
 const int menuLength = sizeof(menuItems) / sizeof(menuItems[0]);
 
@@ -48,8 +50,8 @@ void setup() {
 }
 
 void loop() {
-  // drawMenu();
-  Frogger(display).run();
+  drawMenu();
+  // FroggerGame(display).run();
   checkButtons();
 }
 
@@ -59,7 +61,7 @@ void drawMenu() {
   display.setCursor(0, 0);
   display.setTextSize(1);
   display.println("Select: 'W' - 'S'");
-  display.println(""); 
+  // display.println("");
 
 
   for (int i = 0; i < menuLength; i++) {
@@ -72,7 +74,7 @@ void drawMenu() {
   }
 
   display.println("");
-  display.println("Press 'D' to start");
+  // display.println("Press 'D' to start");
   display.display();
 }
 
@@ -94,28 +96,34 @@ void checkButtons() {
     Serial.println(menuItems[selectedItem]);
     switch (selectedItem) {
       case 0:
-        // Iniciar Space Invaders
-
-        break;
-      case 1:
         Serial.println("Iniciando Pong...");
         Pong(display).run();
         break;
-      case 2:
+      case 1:
         // Iniciar Snake
         Snake(display).run();
         break;
-
-      case 3:
+      case 2:
         // Iniciar Frogger
         FroggerGame(display).run();
         break;
-      
-      case 4:
+
+      case 3:
         // Iniciar Block Breaker
         BlockBreaker(display).run();
         break;
+      
+      case 4:
+        // Iniciar Flappy Bird
+        break;
 
+      case 5:
+        // Iniciar Buscaminas
+        break;
+
+      case 6:
+        // Iniciar Dino Google
+        break;
     }
     delay(200);
   }

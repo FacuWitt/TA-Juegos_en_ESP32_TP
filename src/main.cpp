@@ -6,7 +6,7 @@
 // Juegos
 #include "Pong.h"
 #include "Snake.h"
-#include "Frogger.h"
+#include "FroggerGame.h"
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -46,8 +46,8 @@ void setup() {
 }
 
 void loop() {
-  // drawMenu();
-  Frogger(display).run();
+  drawMenu();
+  // FroggerGame(display).run();
   checkButtons();
 }
 
@@ -106,7 +106,7 @@ void checkButtons() {
 
       case 3:
         // Iniciar Frogger
-        Frogger(display).run();
+        FroggerGame(display).run();
         break;
     }
     delay(200);

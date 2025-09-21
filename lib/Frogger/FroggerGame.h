@@ -1,23 +1,29 @@
 
-#ifndef FROGGER_H
-#define FROGGER_H
+#ifndef FROGGER_GAME_H
+#define FROGGER_GAME_H
 #include <Adafruit_SSD1306.h>
+#include <Line.h>
+#include <Frog.h>
 
-class Frogger {
+class FroggerGame {
     public:
-        Frogger(Adafruit_SSD1306 &disp);
+        FroggerGame(Adafruit_SSD1306 &disp);
         void run();
     private:
         Adafruit_SSD1306 &_display;
-        int _frogX;
-        int _frogY;
-        int _lifes = 3;
+        Frog _frog;
+        int _frogLine; // línea en la que está la rana (0-7)
+        // Line _roadLines[8];
 
         unsigned long _initial_clock;
         bool _running;
         void draw();
         void update();
         void checkButtons();
+        void generateRoadLines();
+
+        // ItemLine _item_lines[8];
+
         const unsigned char *_frog_bmp = nullptr;
         const unsigned char *_truck_big_bmp = nullptr;
         const unsigned char *_truck_small_bmp = nullptr;
@@ -29,4 +35,4 @@ class Frogger {
 
 };
 
-#endif // FROGGER_H
+#endif // FROGGER_GAME_H

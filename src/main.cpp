@@ -48,8 +48,8 @@ void setup() {
 }
 
 void loop() {
-  drawMenu();
-  // Frogger(display).run();
+  // drawMenu();
+  Frogger(display).run();
   checkButtons();
 }
 
@@ -108,7 +108,7 @@ void checkButtons() {
 
       case 3:
         // Iniciar Frogger
-        Frogger(display).run();
+        FroggerGame(display).run();
         break;
       
       case 4:

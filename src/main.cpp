@@ -6,6 +6,7 @@
 // Juegos
 #include "Pong.h"
 #include "Snake.h"
+#include "Frogger.h"
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -21,7 +22,8 @@ void checkButtons();
 const char* menuItems[] = {
   "Space Invaders",
   "Ping-Pong",
-  "Snake"
+  "Snake",
+  "Frogger"
 };
 const int menuLength = sizeof(menuItems) / sizeof(menuItems[0]);
 
@@ -44,7 +46,8 @@ void setup() {
 }
 
 void loop() {
-  drawMenu();
+  // drawMenu();
+  Frogger(display).run();
   checkButtons();
 }
 
@@ -54,7 +57,8 @@ void drawMenu() {
   display.setCursor(0, 0);
   display.setTextSize(1);
   display.println("Select: 'W' - 'S'");
-  display.println("");
+  display.println(""); 
+
 
   for (int i = 0; i < menuLength; i++) {
     if (i == selectedItem) {
@@ -98,6 +102,11 @@ void checkButtons() {
       case 2:
         // Iniciar Snake
         Snake(display).run();
+        break;
+
+      case 3:
+        // Iniciar Frogger
+        Frogger(display).run();
         break;
     }
     delay(200);

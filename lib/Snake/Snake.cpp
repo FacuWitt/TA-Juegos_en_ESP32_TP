@@ -21,7 +21,7 @@ const unsigned char Snake::_food_sprite[] PROGMEM = {
 
 
 Snake::Snake(Adafruit_SSD1306 &disp) : _display(disp) {
-    _snake_length = 2;
+    _snake_length = 3;
     _dir_x = 1; // Movimiento inicial hacia la derecha
     _dir_y = 0;
     _food_x = 80;
@@ -31,6 +31,7 @@ Snake::Snake(Adafruit_SSD1306 &disp) : _display(disp) {
     _initial_clock = millis();
     _running = true;
     _update_interval = 50;
+    pressedKey = false;
 
     pinMode(BTN_W_PIN, INPUT_PULLDOWN);
     pinMode(BTN_A_PIN, INPUT_PULLDOWN);
@@ -50,6 +51,7 @@ void Snake::run(){
         if (millis() - _initial_clock >= _update_interval) {
             _initial_clock = millis();
             update();
+            pressedKey = false;
         }
 
         _display.display();
@@ -74,6 +76,11 @@ void Snake::move(){
     // Mover la cabeza de la serpiente
     if (_snake_x[0] == _food_x && _snake_y[0] == _food_y) {
         _snake_length++;
+        // if (_snake_length > 512) {
+        if (_snake_length > 20) {
+            win();
+            return;
+        }
         spawnFood();
     }
     
@@ -84,7 +91,7 @@ void Snake::move(){
     }
 
     
-    if (_snake_x[0] < 0 || _snake_x[0] > 128 || _snake_y[0] < 0 || _snake_y[0] >= 64) {
+    if (_snake_x[0] < 0 || _snake_x[0] >= 128 || _snake_y[0] < 0 || _snake_y[0] >= 64) {
         gameOver();
     }else {
         for (int i = _snake_length - 1; i > 0; i--) {
@@ -102,20 +109,26 @@ void Snake::update(){
 }
 
 void Snake::checkButtons(){
-    if (digitalRead(BTN_W_PIN) == HIGH && _dir_y != 1) {
-        _dir_x = 0;
-        _dir_y = -1;
-    } else if (digitalRead(BTN_A_PIN) == HIGH && _dir_x != 1) {
-        _dir_x = -1;
-        _dir_y = 0;
-    } else if (digitalRead(BTN_S_PIN) == HIGH && _dir_y != -1) {
-        _dir_x = 0;
-        _dir_y = 1;
-    } else if (digitalRead(BTN_D_PIN) == HIGH && _dir_x != -1) {
-        _dir_x = 1;
-        _dir_y = 0;
-    } else if (digitalRead(BTN_T_PIN) == HIGH) {
-        _running = false;
+    if (!pressedKey){
+        if (digitalRead(BTN_W_PIN) == HIGH && _dir_y != 1) {
+            _dir_x = 0;
+            _dir_y = -1;
+            pressedKey = true;
+        } else if (digitalRead(BTN_A_PIN) == HIGH && _dir_x != 1) {
+            _dir_x = -1;
+            _dir_y = 0;
+            pressedKey = true;
+        } else if (digitalRead(BTN_S_PIN) == HIGH && _dir_y != -1) {
+            _dir_x = 0;
+            _dir_y = 1;
+            pressedKey = true;
+        } else if (digitalRead(BTN_D_PIN) == HIGH && _dir_x != -1) {
+            _dir_x = 1;
+            _dir_y = 0;
+            pressedKey = true;
+        } else if (digitalRead(BTN_T_PIN) == HIGH) {
+            _running = false;
+        }
     }
         
 
@@ -135,5 +148,31 @@ void Snake::gameOver(){
         _display.display();
         delay(100);
     }
+    _running = false;
+}
+
+void Snake::win(){
+    _display.clearDisplay();
+    _display.setTextSize(2);
+    
+    for(int i = 0; i < 10; i++){
+        _display.clearDisplay();
+        draw();
+        _display.setTextColor(SSD1306_WHITE);
+        _display.setCursor(20, 20);
+        _display.println("YOU WIN!");
+        _display.display();
+        delay(100);
+        _display.clearDisplay();
+        draw();
+        _display.setTextColor(SSD1306_BLACK);
+        _display.setCursor(20, 20);
+        _display.println("YOU WIN!");
+        _display.display();
+        delay(100);
+    }
+    
+    _display.display();
+    delay(2000);
     _running = false;
 }

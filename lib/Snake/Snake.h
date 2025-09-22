@@ -16,7 +16,7 @@ class Snake {
         int _food_x, _food_y;
         unsigned long _initial_clock;
         int _update_interval; // milliseconds
-        
+        bool pressedKey; // Para evitar multiples cambios de direccion en un solo frame
         static const unsigned char _section_sprite [] PROGMEM;
         static const unsigned char _food_sprite [] PROGMEM;
         
@@ -26,5 +26,6 @@ class Snake {
         void checkButtons();
         void spawnFood();
         void gameOver();
+        void win();
 };
 #endif

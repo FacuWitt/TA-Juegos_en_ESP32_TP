@@ -8,6 +8,7 @@
 #include "Snake.h"
 #include "FroggerGame.h"
 #include "BlockBreaker.h"
+#include "DinoRunner.h"
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -27,7 +28,7 @@ const char* menuItems[] = {
   "Block Breaker",
   "FLAPPY-BIRD",
   "BUSCAMINAS",
-  "DINO-GOOGLE"
+  "DINO-RUNNER"
 };
 const int menuLength = sizeof(menuItems) / sizeof(menuItems[0]);
 
@@ -122,7 +123,8 @@ void checkButtons() {
         break;
 
       case 6:
-        // Iniciar Dino Google
+        // Iniciar Dino Runner
+        DinoRunner(display).run();
         break;
     }
     delay(200);

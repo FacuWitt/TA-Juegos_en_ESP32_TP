@@ -8,6 +8,7 @@
 #include "Snake.h"
 #include "FroggerGame.h"
 #include "BlockBreaker.h"
+#include "FlappyBird.h"
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -25,7 +26,7 @@ const char* menuItems[] = {
   "Snake",
   "Frogger",
   "Block Breaker",
-  "FLAPPY-BIRD",
+  "Flappy Bird",
   "BUSCAMINAS",
   "DINO-GOOGLE"
 };
@@ -115,6 +116,7 @@ void checkButtons() {
       
       case 4:
         // Iniciar Flappy Bird
+        FlappyBird(display).run();
         break;
 
       case 5:

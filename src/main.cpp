@@ -114,7 +114,6 @@ void checkButtons() {
         // Iniciar Flappy Bird
         Serial.println("Iniciando Flappy Bird...");
         break;
-        
 
       case 4:
         // Iniciar Buscaminas

@@ -27,10 +27,11 @@ Snake::Snake(Adafruit_SSD1306 &disp) : _display(disp) {
     _food_x = 80;
     _food_y = 32;
     _snake_x[0] = 20; // dos vectores que funcionan como matriz de posiciones [x][y]
-    _snake_y[0] = 32;
+    _snake_y[0] = 32; // 20,32 es la posicion inicial
     _initial_clock = millis();
     _running = true;
     _update_interval = 50;
+    _score = 0;
     pressedKey = false;
 
     pinMode(BTN_W_PIN, INPUT_PULLDOWN);
@@ -44,27 +45,25 @@ Snake::Snake(Adafruit_SSD1306 &disp) : _display(disp) {
 void Snake::run(){
     while(_running){
         _display.clearDisplay();
-        
-        draw();
-
         checkButtons();
-        if (millis() - _initial_clock >= _update_interval) {
+        if (millis() - _initial_clock >= _update_interval) { // cada 100ms se actualiza el juego, los botones se chequean mas seguido
             _initial_clock = millis();
-            update();
+            move();
             pressedKey = false;
         }
-
+        draw();
         _display.display();
     }
 }
 
 void Snake::draw(){
+    _display.drawRect(0,8,128,56,SSD1306_WHITE);
+    _display.setTextSize(1);
+    _display.setTextColor(SSD1306_WHITE);
+    _display.setCursor(2,0);
+    _display.print("SCORE: ");
+    _display.print(_score);
 
-    _display.drawFastHLine(0, 0, 128, SSD1306_WHITE);
-    _display.drawFastHLine(0, 63, 128, SSD1306_WHITE);
-    _display.drawFastVLine(0, 0, 64, SSD1306_WHITE);
-    _display.drawFastVLine(127, 0, 64, SSD1306_WHITE);
-    
     for(int i = 0; i < _snake_length; i++){
         _display.drawBitmap(_snake_x[i], _snake_y[i], _section_sprite, 4, 4, SSD1306_WHITE);
     }
@@ -74,14 +73,31 @@ void Snake::draw(){
 void Snake::move(){
 
     // Mover la cabeza de la serpiente
-    if (_snake_x[0] == _food_x && _snake_y[0] == _food_y) {
+    if (_snake_x[0] == _food_x && _snake_y[0] == _food_y) { // La serpiente come
         _snake_length++;
-        // if (_snake_length > 512) {
-        if (_snake_length > 20) {
+        _score += 10;
+        if (_score >= 250) {
             win();
             return;
         }
         spawnFood();
+    }
+
+    // guardar posición vieja de la cabeza
+    int prevX = _snake_x[0];
+    int prevY = _snake_y[0];
+
+    _snake_x[0] += _dir_x * 4;
+    _snake_y[0] += _dir_y * 4;
+
+    if (_snake_x[0] < 0) _snake_x[0] = 124;
+    else if (_snake_x[0] >= 128) _snake_x[0] = 0;
+    else if (_snake_y[0] < 8) _snake_y[0] = 60;
+    else if (_snake_y[0] >= 64) _snake_y[0] = 8;
+
+    for (int i = _snake_length - 1; i > 0; i--) {
+        _snake_x[i] = _snake_x[i - 1];
+        _snake_y[i] = _snake_y[i - 1];
     }
     
     for (int i = _snake_length - 1; i > 1; i--) {
@@ -90,22 +106,7 @@ void Snake::move(){
         }
     }
 
-    
-    if (_snake_x[0] < 0 || _snake_x[0] >= 128 || _snake_y[0] < 0 || _snake_y[0] >= 64) {
-        gameOver();
-    }else {
-        for (int i = _snake_length - 1; i > 0; i--) {
-            _snake_x[i] = _snake_x[i - 1];
-            _snake_y[i] = _snake_y[i - 1];
-        }
-    }
 
-    _snake_x[0] += _dir_x * 4;
-    _snake_y[0] += _dir_y * 4;
-}
-
-void Snake::update(){
-    move();
 }
 
 void Snake::checkButtons(){
@@ -136,7 +137,7 @@ void Snake::checkButtons(){
 
 void Snake::spawnFood(){
     _food_x = random(0, 32) * 4;
-    _food_y = random(0, 16) * 4;
+    _food_y = random(2, 16) * 4;
 }
 
 void Snake::gameOver(){

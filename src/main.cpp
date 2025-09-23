@@ -22,14 +22,14 @@ void drawMenu();
 void checkButtons();
 
 const char* menuItems[] = {
-  "Ping-Pong",
-  "Snake",
-  "Frogger",
-  "Block Breaker",
+  "PING-PONG",
+  "SNAKE",
+  "BLOCK BREAKER",
   "FLAPPY-BIRD",
   "BUSCAMINAS",
   "DINO-RUNNER"
 };
+
 const int menuLength = sizeof(menuItems) / sizeof(menuItems[0]);
 
 int selectedItem = 0;  // índice del menú actual
@@ -58,23 +58,21 @@ void loop() {
 
 void drawMenu() {
   display.clearDisplay();
-  display.setCursor(0, 0);
+  display.setCursor(0, 3);
   display.setTextSize(1);
-  display.println("Select: 'W' - 'S'");
-  // display.println("");
-
+  display.drawRoundRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 5, SSD1306_WHITE);
 
   for (int i = 0; i < menuLength; i++) {
     if (i == selectedItem) {
-      display.print("> ");
+      display.fillRect(0,(i*9)+4, SCREEN_WIDTH, 9, SSD1306_WHITE);
+      display.setTextColor(SSD1306_BLACK);
+      display.setCursor(8, (i*9)+5);
     } else {
-      display.print("  ");
+      display.setCursor(6, (i*9)+5);
+      display.setTextColor(SSD1306_WHITE);
     }
     display.println(menuItems[i]);
   }
-
-  display.println("");
-  // display.println("Press 'D' to start");
   display.display();
 }
 
@@ -99,29 +97,27 @@ void checkButtons() {
         Serial.println("Iniciando Pong...");
         Pong(display).run();
         break;
+
       case 1:
         // Iniciar Snake
         Snake(display).run();
         break;
-      case 2:
-        // Iniciar Frogger
-        FroggerGame(display).run();
-        break;
 
-      case 3:
+      case 2:
         // Iniciar Block Breaker
         BlockBreaker(display).run();
         break;
-      
-      case 4:
+
+      case 3:
         // Iniciar Flappy Bird
         break;
+        
 
-      case 5:
+      case 4:
         // Iniciar Buscaminas
         break;
 
-      case 6:
+      case 5:
         // Iniciar Dino Runner
         DinoRunner(display).run();
         break;

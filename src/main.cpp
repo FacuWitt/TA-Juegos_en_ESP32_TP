@@ -94,12 +94,14 @@ void checkButtons() {
     Serial.println(menuItems[selectedItem]);
     switch (selectedItem) {
       case 0:
+        // Iniciar Pong
         Serial.println("Iniciando Pong...");
         Pong(display).run();
         break;
 
       case 1:
         // Iniciar Snake
+        Serial.println("Iniciando Snake...");
         Snake(display).run();
         break;
 
@@ -110,15 +112,18 @@ void checkButtons() {
 
       case 3:
         // Iniciar Flappy Bird
+        Serial.println("Iniciando Flappy Bird...");
         break;
         
 
       case 4:
         // Iniciar Buscaminas
+        Serial.println("Iniciando Buscaminas...");
         break;
 
       case 5:
         // Iniciar Dino Runner
+        Serial.println("Iniciando Dino Runner...");
         DinoRunner(display).run();
         break;
     }

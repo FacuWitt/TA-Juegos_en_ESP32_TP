@@ -10,6 +10,7 @@
 #include "BlockBreaker.h"
 #include "FlappyBird.h"
 #include "DinoRunner.h"
+#include "Buscamina.h"
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -78,19 +79,27 @@ void drawMenu() {
 }
 
 void checkButtons() {
-  if (digitalRead(BTN_W_PIN) == HIGH) {
+  // Evitar rebote
+  static int ultimo_estado_w = LOW;
+  static int ultimo_estado_s = LOW;
+  static int ultimo_estado_d = LOW;
+    
+  int estado_actual_w = digitalRead(BTN_W_PIN);
+  int estado_actual_s = digitalRead(BTN_S_PIN);
+  int estado_actual_d = digitalRead(BTN_D_PIN);
+  if (digitalRead(BTN_W_PIN) == HIGH && ultimo_estado_w == LOW) {
     selectedItem--;
     if (selectedItem < 0) selectedItem = menuLength - 1;
     drawMenu();
     delay(10);
   }
-  if (digitalRead(BTN_S_PIN) == HIGH) {
+  if (digitalRead(BTN_S_PIN) == HIGH && ultimo_estado_s == LOW) {
     selectedItem++;
     if (selectedItem >= menuLength) selectedItem = 0;
     drawMenu();
     delay(10);
   }
-  if (digitalRead(BTN_D_PIN) == HIGH) {
+  if (digitalRead(BTN_D_PIN) == HIGH && ultimo_estado_d == LOW) {
     Serial.print("Juego seleccionado: ");
     Serial.println(menuItems[selectedItem]);
     switch (selectedItem) {
@@ -120,6 +129,7 @@ void checkButtons() {
       case 4:
         // Iniciar Buscaminas
         Serial.println("Iniciando Buscaminas...");
+        Buscamina(display).run();
         break;
 
       case 5:
@@ -130,4 +140,8 @@ void checkButtons() {
     }
     delay(200);
   }
+  // Actualizar estados para el siguiente ciclo
+    ultimo_estado_w = estado_actual_w;
+    ultimo_estado_s = estado_actual_s;
+    ultimo_estado_d = estado_actual_d;
 }

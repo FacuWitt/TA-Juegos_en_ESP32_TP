@@ -13,7 +13,7 @@ class FlappyBird {
   private:
     Adafruit_SSD1306 &_display;
     int _buttonPin, _potPin;
-    int birdY, velocity, gravity, jumpStrength, dificultad;
+    int birdY, velocity, gravity, jump, dificultad;
     int pipeX, pipeGap, pipeWidth, pipeSpeed;
     int score;
     bool gameOver;

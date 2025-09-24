@@ -9,7 +9,7 @@ FlappyBird::FlappyBird(Adafruit_SSD1306 &disp) : _display(disp) {
     birdY = 32; 
     velocity = 0;
     gravity = 1;
-    jumpStrength = -3;
+    jump = -3;
     pipeX = _display.width();
     pipeGap = 25;
     pipeWidth = 5;
@@ -57,7 +57,7 @@ void FlappyBird::begin() {
   _display.setCursor(28, 40);
   _display.println("Presiona W");
   _display.display();
-  
+
   while (digitalRead(BTN_W_PIN) == LOW) {
     delay(10);
   }
@@ -67,7 +67,7 @@ void FlappyBird::reset() {
   birdY = 32; 
   velocity = 0;
   gravity = 1;
-  jumpStrength = -3;
+  jump = -3;
   pipeX = _display.width();
   pipeGap = 25;
   pipeWidth = 5;
@@ -90,7 +90,7 @@ void FlappyBird::update() {
     }
 
     // Saltar
-    if (digitalRead(BTN_W_PIN) == HIGH) velocity = jumpStrength;
+    if (digitalRead(BTN_W_PIN) == HIGH) velocity = jump;
 
     velocity += gravity;
     birdY += velocity;

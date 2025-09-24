@@ -2,6 +2,9 @@
 
 unsigned long DinoRunner::_highScore = 0;
 
+
+// Sprites para la generacion de los obstaculos y el dinosaurio
+
 // (20x12)
 const unsigned char DinoRunner::_dinoRun1[] PROGMEM = {
   0x00, 0x3F, 0xF0, // ..........##########
@@ -118,6 +121,9 @@ const unsigned char DinoRunner::_birdFly2[] PROGMEM = {
   0x00, 0x10  // ...........#....
 };
 
+
+//Constructor de la clase DinoRunner
+
 DinoRunner::DinoRunner(Adafruit_SSD1306 &disp) : _display(disp) {
     _running = false;
     _gameOver = false;
@@ -132,6 +138,8 @@ DinoRunner::DinoRunner(Adafruit_SSD1306 &disp) : _display(disp) {
         _obstacles[i].isActive = false;
     }
 }
+
+// Metodo principal para ejecutar el juego
 
 void DinoRunner::run() {
     initGame();
@@ -151,6 +159,8 @@ void DinoRunner::run() {
         }
     }
 }
+
+// Inicializa los parametros del juego
 
 void DinoRunner::initGame() {
     _running = true;
@@ -175,6 +185,8 @@ void DinoRunner::initGame() {
     _lastObstacle = millis();
 }
 
+// Verifica el estado de los botones y actua en consecuencia
+
 void DinoRunner::checkButtons() {
     if(digitalRead(BTN_W_PIN) == HIGH && _isOnGround && !_gameOver) {
         _dinoVelY = -JUMP_FORCE;
@@ -193,6 +205,8 @@ void DinoRunner::checkButtons() {
         delay(200);
     }
 }
+
+// Actualiza la logica del juego
 
 void DinoRunner::update() {
     unsigned long currentTime = millis();
@@ -216,6 +230,8 @@ void DinoRunner::update() {
     checkCollisions();
 }
 
+// Actualiza la posicion y estado del dinosaurio
+
 void DinoRunner::updateDino() {
     if(!_isOnGround) {
         _dinoVelY += GRAVITY;
@@ -229,6 +245,8 @@ void DinoRunner::updateDino() {
         }
     }
 }
+
+// Actualiza la posicion y estado de los obstaculos
 
 void DinoRunner::updateObstacles() {
     for(int i = 0; i < MAX_OBSTACLES; i++) {
@@ -247,6 +265,8 @@ void DinoRunner::updateObstacles() {
         _obstacleSpawnTimer = 0;
     }
 }
+
+// Genera un nuevo obstaculo en la pantalla
 
 void DinoRunner::spawnObstacle() {
     for(int i = 0; i < MAX_OBSTACLES; i++) {
@@ -280,6 +300,8 @@ void DinoRunner::spawnObstacle() {
     }
 }
 
+// Verifica si el dinosaurio ha colisionado con algun obstaculo
+
 void DinoRunner::checkCollisions() {
     for(int i = 0; i < MAX_OBSTACLES; i++) {
         if(_obstacles[i].isActive) {
@@ -302,6 +324,8 @@ void DinoRunner::checkCollisions() {
     }
 }
 
+// Verifica si dos rectangulos estan colisionando
+
 bool DinoRunner::isColliding(int dinoX, int dinoY, int dinoW, int dinoH, 
                             int obsX, int obsY, int obsW, int obsH) {
     return (dinoX < obsX + obsW &&
@@ -310,6 +334,8 @@ bool DinoRunner::isColliding(int dinoX, int dinoY, int dinoW, int dinoH,
             dinoY + dinoH > obsY);
 }
 
+// Maneja el estado de fin de juego
+
 void DinoRunner::gameOver() {
     _gameOver = true;
     
@@ -317,6 +343,8 @@ void DinoRunner::gameOver() {
         _highScore = _score;
     }
 }
+
+// Dibuja todos los elementos en la pantalla
 
 void DinoRunner::draw() {
     _display.clearDisplay();
@@ -339,9 +367,13 @@ void DinoRunner::draw() {
     _display.display();
 }
 
+// Dibuja el suelo del juego
+
 void DinoRunner::drawGround() {
     _display.drawLine(0, GROUND_Y, SCREEN_WIDTH, GROUND_Y, SSD1306_WHITE);
 }
+
+// Dibuja el dinosaurio en su posicion actual
 
 void DinoRunner::drawDino() {
     if(_isOnGround) {
@@ -354,6 +386,8 @@ void DinoRunner::drawDino() {
         _display.drawBitmap(_dinoX, _dinoY, _dinoJump, DINO_WIDTH, DINO_HEIGHT, SSD1306_WHITE);
     }
 }
+
+// Dibuja los obstaculos en sus posiciones actuales
 
 void DinoRunner::drawObstacles() {
     for(int i = 0; i < MAX_OBSTACLES; i++) {
@@ -378,6 +412,8 @@ void DinoRunner::drawObstacles() {
         }
     }
 }
+
+// Dibuja la interfaz de usuario (puntuacion y controles)
 
 void DinoRunner::drawUI() {
     _display.setTextSize(1);

@@ -1,9 +1,11 @@
+// DinoRunner.h
 #ifndef DINORUNNER_H
 #define DINORUNNER_H
-
+// Librerias necesarias para ejecutar el juego
 #include <Adafruit_SSD1306.h>
 #include <Arduino.h>
 
+// Estructura para representar un obstáculo
 struct Obstacle {
     int x, y;
     int width, height;
@@ -12,11 +14,18 @@ struct Obstacle {
     bool isLarge;
 };
 
+// Clase principal del juego
 class DinoRunner {
 public:
+
+// Constructor que recibe una referencia a la pantalla OLED
+
     DinoRunner(Adafruit_SSD1306 &disp);
-    
+// Inicia el juego
+
     void run();
+
+// Atributos privados
 
 private:
     Adafruit_SSD1306 &_display;
@@ -46,7 +55,9 @@ private:
     static const int BTN_W_PIN = 19;
     static const int BTN_A_PIN = 18;
     static const int BTN_T_PIN = 16;
-    
+ 
+// Variables del juego
+
     bool _running;
     bool _gameOver;
     unsigned long _lastUpdate;
@@ -70,6 +81,8 @@ private:
     int _animFrame;
     unsigned long _lastAnimUpdate;
     const int _animDelay = 200; 
+
+// Sprites en PROGMEM
     
     static const unsigned char _dinoRun1[] PROGMEM;
     static const unsigned char _dinoRun2[] PROGMEM;
@@ -79,6 +92,7 @@ private:
     static const unsigned char _birdFly1[] PROGMEM;
     static const unsigned char _birdFly2[] PROGMEM;
     
+// Metodos Privados
     void initGame();
     
     void update();

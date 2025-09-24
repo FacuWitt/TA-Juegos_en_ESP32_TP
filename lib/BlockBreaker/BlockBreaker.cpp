@@ -62,6 +62,11 @@ void BlockBreaker::run() {
             _drawGameElements();
         }
 
+        if(digitalRead(BTN_T_PIN) == HIGH){
+            _running= false;
+        }
+        
+        
         if (_gameOver) {
             delay(2000); // Espera 2 segundos
             _running = false;

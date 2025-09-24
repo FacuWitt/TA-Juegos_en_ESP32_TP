@@ -38,6 +38,7 @@ private:
     static const int NUM_COLS = 10;
     static const int BTN_A_PIN = 18;
     static const int BTN_D_PIN = 17;
+    static const int BTN_T_PIN = 16;
 
 
     // Variables de estado del juego

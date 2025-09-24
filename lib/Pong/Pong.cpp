@@ -117,7 +117,7 @@ void Pong::update() { // donde sucede la logica del juego
         _ball_pos_y = 32;
         _vel_y = 0;
         _cant_toques = 0;
-        _vel_x = 2;
+        _vel_x = -2;
     }
 
 }

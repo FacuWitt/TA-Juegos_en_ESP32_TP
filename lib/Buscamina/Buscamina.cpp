@@ -150,6 +150,9 @@ void Buscamina::run() {
     inicio_tiempo = millis();
     
     while (!juego_terminado) {
+        if(digitalRead(BTN_T_PIN) == HIGH){
+            juego_terminado = true;
+        }
         // Actualiza el tiempo transcurrido
         contador_tiempo = millis() - inicio_tiempo; 
 

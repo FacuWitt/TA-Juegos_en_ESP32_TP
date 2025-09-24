@@ -55,11 +55,11 @@ void Pong::update() { // donde sucede la logica del juego
     digitalRead(BTN_S_PIN);
     digitalRead(BTN_D_PIN);
     
-    // Movimiento de la bola
+    // movimiento de la bola
     _ball_pos_x += _vel_x;
     _ball_pos_y += _vel_y;
 
-    // Movimiento de las paletas
+    // movimiento de las paletas
     if (digitalRead(BTN_W_PIN) == HIGH && digitalRead(BTN_A_PIN) == LOW && _p1_y > 0) {
         _p1_y -= _vel_pal;
     }
@@ -73,20 +73,20 @@ void Pong::update() { // donde sucede la logica del juego
         _p2_y += _vel_pal;
     }
 
-    // Colisiones con las paletas
+    // colisiones con las paletas
     if (4 <= _ball_pos_x && _ball_pos_x <= 6 && _ball_pos_y >= _p1_y && _ball_pos_y <= _p1_y + 12)
     {
         _vel_x = -_vel_x;
-        _vel_y += (_ball_pos_y - (_p1_y + 6)) / 3; // Ajusta la velocidad vertical según el punto de colisión
+        _vel_y += (_ball_pos_y - (_p1_y + 6)) / 3; // La vel vertical depende de donde la pelota golpea la paleta
         _cant_toques++;
     }
     else if (122 <= _ball_pos_x && _ball_pos_x <= 124 && _ball_pos_y >= _p2_y && _ball_pos_y <= _p2_y + 12)
     {
         _vel_x = -_vel_x;
-        _vel_y += (_ball_pos_y - (_p2_y + 6)) / 3; // Ajusta la velocidad vertical según el punto de colisión
+        _vel_y += (_ball_pos_y - (_p2_y + 6)) / 3; // La vel vertical depende de donde la pelota golpea la paleta
         _cant_toques++;
     }
-    // Colisiones con los bordes superior e inferior
+    // colisiones con los bordes superior e inferior
     if (_ball_pos_y <= 0 || _ball_pos_y >= 63)
     {
         _vel_y = -_vel_y;
@@ -98,7 +98,7 @@ void Pong::update() { // donde sucede la logica del juego
     }
 
 
-    // Goles
+    // goles
     if (_ball_pos_x <= 0)
     {
         goal();

@@ -46,7 +46,7 @@ void FlappyBird::run() {
 }
 
 void FlappyBird::begin() {
-  reset(); // inicializa estado del juego
+  reset();
 
   // Pantalla de inicio
   _display.clearDisplay();
@@ -57,7 +57,6 @@ void FlappyBird::begin() {
   _display.setCursor(28, 40);
   _display.println("Presiona W");
   _display.display();
-  delay(1000);
   
   while (digitalRead(BTN_W_PIN) == LOW) {
     delay(10);
@@ -80,42 +79,41 @@ void FlappyBird::reset() {
 
 void FlappyBird::update() {
   if (!gameOver) {
-    // dificultad con potenciómetro
+    // Aumentar dificultad
     if (digitalRead(BTN_D_PIN) == HIGH) {
         dificultad++;
         if (dificultad > 10) dificultad = 10; 
         pipeGap = 35 - dificultad * 2; 
-        if (pipeGap < 10) pipeGap = 10;  
-        pipeSpeed = 1 + dificultad / 2;
+        if (pipeGap < 7) pipeGap = 7;  
+        pipeSpeed += dificultad / 2;
         delay(200);
     }
 
-    // salto
+    // Saltar
     if (digitalRead(BTN_W_PIN) == HIGH) velocity = jumpStrength;
 
-    // física
     velocity += gravity;
     birdY += velocity;
     if (birdY < 0) birdY = 0;
     if (birdY > _display.height() - 1) birdY = _display.height() - 1;
 
-    // tuberías
+    // Mover tuberías
     pipeX -= pipeSpeed;
 
-    // puntuación (cuando pasa tubería)
+    // Puntuación (cuando pasa tubería)
     if (pipeX + pipeWidth < 15 && !gameOver && birdY > 0) {
       score++;
       pipeX = _display.width();
     }
 
-    // colisiones
+    // Colisiones
     int pipeTop = (_display.height() - pipeGap) / 2;
     int pipeBottom = pipeTop + pipeGap;
     if ((birdY < pipeTop || birdY > pipeBottom) && pipeX < 20 && pipeX > 0) {
       gameOver = true;
     }
   } else {
-    // reinicio
+    // Reiniciar juego
     if (digitalRead(BTN_W_PIN) == HIGH) {
       reset();
       delay(500);

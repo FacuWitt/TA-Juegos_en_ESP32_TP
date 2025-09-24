@@ -64,7 +64,29 @@
       "top": 163.2,
       "left": 144,
       "attrs": { "text": "T (terminar juego)" }
-    }
+    },
+    {
+      "type": "wokwi-pushbutton-6mm",
+      "id": "btn6",
+      "top": 93.8,
+      "left": 67.2,
+      "attrs": { "color": "yellow", "xray": "1", "key": "r" }
+    },
+    {
+      "type": "wokwi-pushbutton-6mm",
+      "id": "btn7",
+      "top": 93.8,
+      "left": 105.6,
+      "attrs": { "color": "red", "xray": "1", "key": "g", "bounce": "1" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text6",
+      "top": 76.8,
+      "left": 76.8,
+      "attrs": { "text": "R\n\n" }
+    },
+    { "type": "wokwi-text", "id": "text7", "top": 76.8, "left": 115.2, "attrs": { "text": "G" } }
   ],
   "connections": [
     [ "esp:TX", "$serialMonitor:RX", "", [] ],
@@ -85,7 +107,11 @@
     [ "btn5:1.l", "esp:16", "green", [ "h-249.6", "v-105.6" ] ],
     [ "btn5:2.l", "esp:3V3", "red", [ "h-355.2", "v-230" ] ],
     [ "oled1:VCC", "esp:3V3", "red", [ "v-124.8", "h-163.05", "v76.8", "h-96", "v38.4" ] ],
-    [ "btn1:2.l", "esp:3V3", "red", [ "v67.6", "h-268.8", "v-230.4" ] ]
+    [ "btn1:2.l", "esp:3V3", "red", [ "v67.6", "h-268.8", "v-230.4" ] ],
+    [ "btn6:2.l", "esp:GND.2", "red", [ "v67.6", "h-307.2", "v-230.4" ] ],
+    [ "btn7:2.l", "esp:GND.2", "red", [ "v67.6", "h-345.6", "v-230.4" ] ],
+    [ "btn6:1.l", "esp:4", "green", [ "h-9.6", "v57.6", "h-192" ] ],
+    [ "btn7:1.l", "esp:2", "green", [ "v48", "h-240" ] ]
   ],
   "dependencies": {}
 }

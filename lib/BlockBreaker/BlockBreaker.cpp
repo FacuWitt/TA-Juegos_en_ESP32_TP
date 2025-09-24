@@ -76,7 +76,6 @@ void BlockBreaker::run() {
 }
 
 // Métodos de lógica interna del juego:
-// A continuación se muestra cómo implementar cada método privado, moviendo el código de tu `main.cpp`.
 
 // Inicialización del juego
 void BlockBreaker::_init() {
@@ -93,8 +92,6 @@ void BlockBreaker::_init() {
 // Actualiza toda la lógica del juego
 void BlockBreaker::_updateGameLogic() {
     
-    
-
     int direction = 0;
     if (digitalRead(BTN_A_PIN) == HIGH) {
         direction = -1; // Mover a la izquierda

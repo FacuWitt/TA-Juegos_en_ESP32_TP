@@ -8,6 +8,7 @@
 #include "Snake.h"
 #include "FroggerGame.h"
 #include "BlockBreaker.h"
+#include "FlappyBird.h"
 #include "DinoRunner.h"
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
@@ -113,6 +114,7 @@ void checkButtons() {
       case 3:
         // Iniciar Flappy Bird
         Serial.println("Iniciando Flappy Bird...");
+        FlappyBird(display).run();
         break;
 
       case 4:
